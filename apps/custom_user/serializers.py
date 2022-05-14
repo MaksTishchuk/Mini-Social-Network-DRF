@@ -6,6 +6,11 @@ from .models import MyUser
 class GetMyUserSerializer(serializers.ModelSerializer):
     """ Вывод информации о пользователе """
 
+<<<<<<< HEAD
+=======
+    avatar = serializers.ImageField(read_only=True)
+
+>>>>>>> 5dfeb0a (Added app followers: list and add.)
     class Meta:
         model = MyUser
         exclude = (
@@ -35,3 +40,16 @@ class GetMyUserPublicSerializer(serializers.ModelSerializer):
             "groups",
             "user_permissions",
         )
+<<<<<<< HEAD
+=======
+
+
+class MyUserToFollowerSerializer(serializers.ModelSerializer):
+    """ Сериализация для подписчиков """
+
+    avatar = serializers.ImageField(read_only=True)
+
+    class Meta:
+        model = MyUser
+        fields = ('id', 'username', 'avatar')
+>>>>>>> 5dfeb0a (Added app followers: list and add.)
