@@ -25,7 +25,7 @@
 
 ##### 3) Перейти по адресу
 
-    http://127.0.0.1:8000/api/v1/swagger/
+    http://127.0.0.1:8080/api/v1/swagger/
 
 ## Разработка с Docker
 
@@ -66,7 +66,7 @@
 
     docker-compose up
 
-##### 6) Сделать миграции
+##### 6) Создать миграции
 
     docker exec -it social_drf_social_drf_back_1 python manage.py makemigrations
 
