@@ -30,7 +30,7 @@ class MyUserAdmin(UserAdmin):
                 ),
             },
         ),
-        (_("Important dates"), {"fields": ("first_login", "last_login", "date_joined")}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (_("Additional info"), {"fields": ("phone", "avatar", "gender")}),
     )
 
