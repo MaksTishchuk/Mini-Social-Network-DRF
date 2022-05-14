@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  social_drf_back:
+    build: ./
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env.dev
+  social_drf-db:
+    image: postgres:12
+    volumes:
+      - social_drf_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.dev
+    ports:
+      - 5432:5432
+
+volumes:
+  social_drf_postgres_data:
