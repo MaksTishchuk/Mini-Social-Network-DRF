@@ -14,22 +14,34 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
+
+# python-dotenv
+# https://pypi.org/project/python-dotenv/
+from dotenv import load_dotenv
+
+# Loading ENV
+env_path = Path('.') / '.env.dev'
+load_dotenv(dotenv_path=env_path)
+# end python-dotenv
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'applications'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-rq%bh9bx^-st^xlg1dlkanda-73^ecz69h-0b70qf3qxk9&#it'
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
+DEBUG = bool(int(os.getenv("DEBUG", default=1)))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(" ")
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
@@ -43,13 +55,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
     'rest_framework',
     'djoser',
+    'mptt',
+
     'drf_yasg',
 
-
-    'apps.custom_user.apps.CustomUserConfig',
+    'applications.custom_user.apps.CustomUserConfig',
+    'applications.wall.apps.WallConfig',
+    'applications.comments.apps.CommentsConfig',
+    'applications.followers.apps.FollowersConfig',
+    'applications.feed.apps.FeedConfig',
 ]
 
 
@@ -100,12 +116,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("POSTGRES_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("POSTGRES_USER", "user"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
-        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
-        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        "ENGINE": os.getenv("POSTGRES_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.getenv("POSTGRES_USER", "user"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "password"),
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+        "PORT": os.getenv("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -164,9 +180,15 @@ REST_FRAMEWORK = {
     ),
 }
 
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    # 'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+}
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60*24),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -202,3 +224,11 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:1313",
     "http://localhost:4200",
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", None)
+EMAIL_HOST = os.getenv("EMAIL_HOST", None)
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", None)
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", None)
+EMAIL_PORT = os.getenv("EMAIL_PORT", None)
