@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 
-from custom_user.models import MyUser
+from .models import MyUser
 
 
 class MyUserAdmin(UserAdmin):

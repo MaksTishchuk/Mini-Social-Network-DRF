@@ -3,8 +3,8 @@ from rest_framework import permissions, generics
 
 from .models import Post, Comment
 from .serializers import (PostSerializer, ListPostSerializer, CreateCommentSerializer)
-from apps.base.classes import CreateRetrieveUpdateDestroy, CreateUpdateDestroy
-from apps.base.permissions import IsAuthor
+from applications.base.classes import CreateRetrieveUpdateDestroy, CreateUpdateDestroy
+from applications.base.permissions import IsAuthor
 
 
 class PostListView(generics.ListAPIView):

@@ -3,7 +3,7 @@ from django.conf import settings
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
-from apps.comments.models import AbstractComment
+from applications.comments.models import AbstractComment
 
 
 class Post(models.Model):
