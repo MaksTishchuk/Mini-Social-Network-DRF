@@ -14,7 +14,7 @@ class PostListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Post.objects.filter(
-            user_id=self.kwargs.get('pk')
+            user_id=self.kwargs.get('pk'), published=True, moderation=True
         ).select_related('user').prefetch_related('comments')
 
 

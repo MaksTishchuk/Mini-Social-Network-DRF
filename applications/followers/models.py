@@ -14,3 +14,8 @@ class Follower(models.Model):
 
     def __str__(self):
         return f'{self.subscriber} subscribe to {self.user}'
+
+    class Meta:
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики'
+        ordering = ['-id']

@@ -6,18 +6,23 @@ from .models import MyUser
 class GetMyUserSerializer(serializers.ModelSerializer):
     """ Вывод информации о пользователе """
 
-    avatar = serializers.ImageField(read_only=True)
+    # avatar = serializers.ImageField(read_only=True)
 
     class Meta:
         model = MyUser
         exclude = (
+            "id",
             "password",
+            "email",
             "last_login",
             "is_active",
             "is_staff",
             "is_superuser",
             "groups",
             "user_permissions",
+            "date_joined",
+            "first_login",
+            "avatar"
         )
 
 
@@ -27,6 +32,7 @@ class GetMyUserPublicSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         exclude = (
+            "id",
             "email",
             "phone",
             "password",
