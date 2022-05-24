@@ -43,6 +43,7 @@ DEBUG = bool(int(os.getenv("DEBUG", default=1)))
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(" ")
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Application definition
 
@@ -181,7 +182,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     # 'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
@@ -191,7 +191,6 @@ DJOSER = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60 * 24),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
